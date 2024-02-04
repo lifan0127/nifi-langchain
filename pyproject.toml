@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "nifi-langchain"
+version = "0.0.1"
+description = "NiFi LangChain bundle."
+authors = ["Fan Li <fan.li@apex974.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+langchain = "^0.1.4"
+langchain-openai = "^0.0.5"
+langchain-core = "^0.1.17"
+langchain-community = "^0.0.16"
+
+[tool.poetry.group.dev]
+
+[tool.poetry.group.dev.dependencies]
+python-dotenv = "^1.0.1"
+pgvector = "^0.2.4"
+psycopg2-binary = "^2.9.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
