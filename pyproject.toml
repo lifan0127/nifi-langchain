@@ -12,6 +12,7 @@ langchain = "^0.1.4"
 langchain-openai = "^0.0.5"
 langchain-core = "^0.1.17"
 langchain-community = "^0.0.16"
+psycopg2 = "^2.9.9"
 
 [tool.poetry.group.dev]
 
