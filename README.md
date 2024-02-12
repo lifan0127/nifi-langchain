@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The NiFi LangChain processors enable the construction of LangChain pipelines within NiFi, leveraging the capabilities of Large Language Models (LLMs) for various data processing tasks. These processors are designed to work with NiFi 2.0's Python Extensions, aligning with the LangChain Expression Language (LCEL) paradigm. 
+The NiFi LangChain processors enable the construction of [LangChain](https://python.langchain.com/docs/get_started/introduction) pipelines within [NiFi](https://nifi.apache.org/), leveraging the capabilities of Large Language Models (LLMs) for various data processing tasks. These processors are designed to work with NiFi 2.0's [Python Extensions](https://github.com/apache/nifi/tree/main/nifi-python-extensions), aligning with the [LangChain Expression Language (LCEL)](https://python.langchain.com/docs/expression_language/) paradigm. 
 
 As the implementation focuses on data pipeline functionalities, features specific to interactive applications (e.g., chat history) and autonomous systems (e.g., agent capabilities) are not supported.
 
