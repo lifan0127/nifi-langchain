@@ -13,7 +13,7 @@ Given NiFi's flowfile-based architecture, this integration primarily use the LCE
 | Chat Model | Text completion using an LLM | Model |
 | Output Parser | Parsing LLM outputs | OutputParser |
 | PromptTemplate | Build prompt templates from user inputs | PromptTemplate |
-| RunnableParallel | Create parallel, composable execution paths in LCEL | RunnableParallelStart, RunnableParallelMerge |
+| RunnableParallel | Create parallel, composable execution paths in LCEL | RunnableParallel, RunnableParallelMerge |
 | Retriever | Retrieve relevant context information | Retriever |
 
 Routing (Runnable Branch) can be achieved through existing NiFi processors and are not replicated here.
@@ -52,7 +52,7 @@ Each processor may have one or a few required parameters. For example, the `Mode
 | Model | langchain.model. | langchain.model.model_name (set model name, e.g. 'gpt-4-turbo') |
 | Retriever | langchain.retriever. | langchain.retriever. |
 
-The `RunnableParallelStart` and `RunnableParallelMerge` processors should be used in pairs, with `RunnableParallelStart` defining paralle paths. Each custom property prefixed with `nifi.runnable_parallel.` define a new output relationship to route your flowfile. For example, custom property `nifi.runnable_parallel.context` defines a new `context` relationship.
+The `RunnableParallel` and `RunnableParallelMerge` processors should be used in pairs, with `RunnableParallel` defining paralle paths. Each custom property prefixed with `nifi.runnable_parallel.` define a new output relationship to route your flowfile. For example, custom property `nifi.runnable_parallel.context` defines a new `context` relationship.
 
 ## Contribution
 
