@@ -10,11 +10,11 @@ Given NiFi's flowfile-based architecture, this integration primarily use the LCE
 
 | LCEL Component | Function | Processors |
 | --- | --- | --- |
-| Chat Model | Text completion using an LLM | Model |
-| Output Parser | Parsing LLM outputs | OutputParser |
-| PromptTemplate | Build prompt templates from user inputs | PromptTemplate |
-| RunnableParallel | Create parallel, composable execution paths in LCEL | RunnableParallel, RunnableParallelMerge |
-| Retriever | Retrieve relevant context information | Retriever |
+| Chat Model | Text completion using an LLM | [Model](extensions/nifi-langchain-module/src/main/python/model/Model.py) |
+| Output Parser | Parsing LLM outputs | [OutputParser](extensions/nifi-langchain-module/src/main/python/output-parser/OutputParser.py) |
+| PromptTemplate | Build prompt templates from user inputs | [PromptTemplate](extensions/nifi-langchain-module/src/main/python/prompt-template/PromptTemplate.py) |
+| RunnableParallel | Create parallel, composable execution paths in LCEL | [RunnableParallel](extensions/nifi-langchain-helper/nifi-langchain-helper-processors/src/main/java/com/apex974/nifi/processors/langchain-helper/RunnableParallel.java), [RunnableParallelMerge](extensions/nifi-langchain-helper/nifi-langchain-helper-processors/src/main/java/com/apex974/nifi/processors/langchain-helper/RunnableParallelMerge.java) |
+| Retriever | Retrieve relevant context information | [Retriever](extensions/nifi-langchain-module/src/main/python/retriever/Retriever.py) |
 
 Routing (Runnable Branch) can be achieved through existing NiFi processors and are not replicated here.
 
