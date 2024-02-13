@@ -54,11 +54,10 @@ For installation in your NiFi environment (version 2.0 or higher required), down
 
 ## Configuration
 
-Each processor may have one or a few required parameters. For example, the `Model` processor necessitates selecting an LLM model. Additionally, you can directly pass parameters into the underlying LangChain LCEL components by declare NiFi properties with prefixes.
+Each processor may have one or a few required parameters. For example, the `Model` processor necessitates selecting an LLM model. Additionally, you can directly pass parameters into the underlying LangChain LCEL components of the following processors by declare NiFi properties with prefixes. Please check out the [example flow definitions](./examples).
 
 | Processor | Prefix | Examples |
 | --- | --- | --- |
-| PromptTemplate | langchain.prompt_template. | langchain.prompt_template.length (set prompt length) |
 | Model | langchain.model. | langchain.model.model_name (set model name, e.g. 'gpt-4-turbo') |
 | Retriever | langchain.retriever. | langchain.retriever. |
 
