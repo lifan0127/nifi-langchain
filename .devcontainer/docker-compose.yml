@@ -1,8 +1,9 @@
 version: '3.8'
 services:
   devcontainer:
-    image: apache/nifi:2.0.0-M2
+    build: ./
     volumes:
+      - .bashrc:/root/.bashrc:cached
       - ../..:/workspaces:cached
     ports:
       - 8443:8443
