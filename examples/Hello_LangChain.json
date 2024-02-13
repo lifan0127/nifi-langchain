@@ -1,1 +1,487 @@
-{"flowContents":{"identifier":"25bea6d4-5966-344e-9c73-88130855ec1d","instanceIdentifier":"018d1009-0fab-1550-f968-4b3fdbb62196","name":"Hello LangChain","comments":"","position":{"x":176.0,"y":-104.0},"processGroups":[],"remoteProcessGroups":[],"processors":[{"identifier":"d5b26089-2cd6-3842-a24e-f5946173f864","instanceIdentifier":"377754a6-a8e3-38b1-5935-9fdd5f1ec829","name":"Trigger","comments":"","position":{"x":1000.0,"y":32.0},"type":"org.apache.nifi.processors.standard.GenerateFlowFile","bundle":{"group":"org.apache.nifi","artifact":"nifi-standard-nar","version":"2.0.0-M2"},"properties":{"character-set":"UTF-8","File Size":"0B","mime-type":"application/json","generate-ff-custom-text":"{\"topic\": \"ice cream\"}","Batch Size":"1","Unique FlowFiles":"false","Data Format":"Text"},"propertyDescriptors":{"character-set":{"name":"character-set","displayName":"Character Set","identifiesControllerService":false,"sensitive":false,"dynamic":false},"File Size":{"name":"File Size","displayName":"File Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"mime-type":{"name":"mime-type","displayName":"Mime Type","identifiesControllerService":false,"sensitive":false,"dynamic":false},"generate-ff-custom-text":{"name":"generate-ff-custom-text","displayName":"Custom Text","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Batch Size":{"name":"Batch Size","displayName":"Batch Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Unique FlowFiles":{"name":"Unique FlowFiles","displayName":"Unique FlowFiles","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Data Format":{"name":"Data Format","displayName":"Data Format","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"100 ms","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":0,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":[],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"},{"identifier":"af6fdb12-db52-33ea-89f9-af8019a22aab","instanceIdentifier":"fdf4e011-5df8-3b46-3c6b-15f5af873954","name":"PromptTemplate","comments":"","position":{"x":1000.0,"y":296.0},"type":"python.PromptTemplate","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Template":"Tell me a joke about {topic}."},"propertyDescriptors":{"Template":{"name":"Template","displayName":"Template","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"},{"identifier":"0357acbe-405a-3f70-92b2-0bf4190f02c0","instanceIdentifier":"2b33db3b-7bbe-3a0b-0722-cba577f15c1f","name":"OutputParser","comments":"","position":{"x":2016.0,"y":296.0},"type":"python.OutputParser","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Output Parser":"StrOutputParser"},"propertyDescriptors":{"Output Parser":{"name":"Output Parser","displayName":"Output Parser","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"},{"identifier":"3f5a050d-2106-35eb-99da-7ea92e9fc31f","instanceIdentifier":"7c61ad26-c17f-367a-edc6-085e2cf0939b","name":"Model","comments":"","position":{"x":1520.0,"y":296.0},"type":"python.Model","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Model":"ChatOpenAI","langchain.model.model":"gpt-4-turbo-preview"},"propertyDescriptors":{"langchain.model.api_key":{"name":"langchain.model.api_key","displayName":"langchain.model.api_key","identifiesControllerService":false,"sensitive":true,"dynamic":true},"Model":{"name":"Model","displayName":"Model","identifiesControllerService":false,"sensitive":false,"dynamic":false},"langchain.model.model":{"name":"langchain.model.model","displayName":"langchain.model.model","identifiesControllerService":false,"sensitive":false,"dynamic":true}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"}],"inputPorts":[],"outputPorts":[],"connections":[{"identifier":"2985b551-5889-3d14-bcca-1c1c55fd7555","instanceIdentifier":"c5831ad8-8dea-324c-710c-a9531acd4fad","name":"","source":{"id":"0357acbe-405a-3f70-92b2-0bf4190f02c0","type":"PROCESSOR","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"OutputParser","comments":"","instanceIdentifier":"2b33db3b-7bbe-3a0b-0722-cba577f15c1f"},"destination":{"id":"f91aead0-d217-3f31-a83a-64c9fb77ce6b","type":"FUNNEL","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"Funnel","comments":"","instanceIdentifier":"44777a1b-a267-3b07-7104-d5d2b7be1269"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"},{"identifier":"57204a9e-a8f1-3708-860c-8cc253988719","instanceIdentifier":"2a5c3282-4d07-3d4b-b414-34ab00c3f229","name":"","source":{"id":"d5b26089-2cd6-3842-a24e-f5946173f864","type":"PROCESSOR","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"Trigger","comments":"","instanceIdentifier":"377754a6-a8e3-38b1-5935-9fdd5f1ec829"},"destination":{"id":"af6fdb12-db52-33ea-89f9-af8019a22aab","type":"PROCESSOR","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"PromptTemplate","comments":"","instanceIdentifier":"fdf4e011-5df8-3b46-3c6b-15f5af873954"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"},{"identifier":"6673449b-40be-3271-aae6-901306f0f131","instanceIdentifier":"a88f3eca-2b81-37c1-4c6e-5775e677a9fa","name":"","source":{"id":"3f5a050d-2106-35eb-99da-7ea92e9fc31f","type":"PROCESSOR","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"Model","comments":"","instanceIdentifier":"7c61ad26-c17f-367a-edc6-085e2cf0939b"},"destination":{"id":"0357acbe-405a-3f70-92b2-0bf4190f02c0","type":"PROCESSOR","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"OutputParser","comments":"","instanceIdentifier":"2b33db3b-7bbe-3a0b-0722-cba577f15c1f"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"},{"identifier":"48e1c8fc-61ed-3e6f-b592-27639940f0c1","instanceIdentifier":"3196e643-f6eb-3070-5d8a-d50ee0bcb0fa","name":"","source":{"id":"af6fdb12-db52-33ea-89f9-af8019a22aab","type":"PROCESSOR","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"PromptTemplate","comments":"","instanceIdentifier":"fdf4e011-5df8-3b46-3c6b-15f5af873954"},"destination":{"id":"3f5a050d-2106-35eb-99da-7ea92e9fc31f","type":"PROCESSOR","groupId":"25bea6d4-5966-344e-9c73-88130855ec1d","name":"Model","comments":"","instanceIdentifier":"7c61ad26-c17f-367a-edc6-085e2cf0939b"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"}],"labels":[{"identifier":"0aca742c-1e61-3c0e-8488-7bfb7755f328","instanceIdentifier":"771c2ead-018d-1000-a129-b2c4e6143a90","position":{"x":968.0,"y":248.0},"label":"                                                                            LangChain Expression Language (LCEL) in NiFi","zIndex":0,"width":1416.0,"height":192.0,"style":{"font-size":"24px"},"componentType":"LABEL","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"}],"funnels":[{"identifier":"f91aead0-d217-3f31-a83a-64c9fb77ce6b","instanceIdentifier":"44777a1b-a267-3b07-7104-d5d2b7be1269","position":{"x":2168.0,"y":568.0},"componentType":"FUNNEL","groupIdentifier":"25bea6d4-5966-344e-9c73-88130855ec1d"}],"controllerServices":[],"defaultFlowFileExpiration":"0 sec","defaultBackPressureObjectThreshold":10000,"defaultBackPressureDataSizeThreshold":"1 GB","scheduledState":"ENABLED","executionEngine":"INHERITED","maxConcurrentTasks":1,"statelessFlowTimeout":"1 min","logFileSuffix":"","flowFileConcurrency":"UNBOUNDED","flowFileOutboundPolicy":"STREAM_WHEN_AVAILABLE","componentType":"PROCESS_GROUP"},"externalControllerServices":{},"parameterContexts":{},"flowEncodingVersion":"1.0","parameterProviders":{},"latest":false}
+{
+  "flowContents": {
+    "identifier": "0720f106-72d3-37ac-b92b-ab737cd36196",
+    "instanceIdentifier": "9e4aff05-018d-1000-cc9a-afc6df00b9a6",
+    "name": "Hello_LangChain",
+    "comments": "",
+    "position": {
+      "x": 342.0,
+      "y": 221.0
+    },
+    "processGroups": [],
+    "remoteProcessGroups": [],
+    "processors": [
+      {
+        "identifier": "d5b26089-2cd6-3842-a24e-f5946173f864",
+        "instanceIdentifier": "605bfc57-eac6-36e1-4654-e030f27fd6ae",
+        "name": "Trigger",
+        "comments": "",
+        "position": {
+          "x": 1000.0,
+          "y": 32.0
+        },
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.0.0-M2"
+        },
+        "properties": {
+          "character-set": "UTF-8",
+          "File Size": "0B",
+          "mime-type": "application/json",
+          "generate-ff-custom-text": "{\"topic\": \"ice cream\"}",
+          "Batch Size": "1",
+          "Unique FlowFiles": "false",
+          "Data Format": "Text"
+        },
+        "propertyDescriptors": {
+          "character-set": {
+            "name": "character-set",
+            "displayName": "Character Set",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "File Size": {
+            "name": "File Size",
+            "displayName": "File Size",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "mime-type": {
+            "name": "mime-type",
+            "displayName": "Mime Type",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "generate-ff-custom-text": {
+            "name": "generate-ff-custom-text",
+            "displayName": "Custom Text",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Batch Size": {
+            "name": "Batch Size",
+            "displayName": "Batch Size",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Unique FlowFiles": {
+            "name": "Unique FlowFiles",
+            "displayName": "Unique FlowFiles",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Data Format": {
+            "name": "Data Format",
+            "displayName": "Data Format",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "100 ms",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      },
+      {
+        "identifier": "af6fdb12-db52-33ea-89f9-af8019a22aab",
+        "instanceIdentifier": "9031397b-37b3-3523-9ae8-745ef86f56a2",
+        "name": "PromptTemplate",
+        "comments": "",
+        "position": {
+          "x": 1000.0,
+          "y": 296.0
+        },
+        "type": "python.PromptTemplate",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.0.2-SNAPSHOT"
+        },
+        "properties": {
+          "Template": "Tell me a joke about {topic}."
+        },
+        "propertyDescriptors": {
+          "Template": {
+            "name": "Template",
+            "displayName": "Template",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 25,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "failure"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      },
+      {
+        "identifier": "0357acbe-405a-3f70-92b2-0bf4190f02c0",
+        "instanceIdentifier": "d3f6e062-d3f4-3b27-d8fe-c48bdd6d8dc7",
+        "name": "OutputParser",
+        "comments": "",
+        "position": {
+          "x": 2016.0,
+          "y": 296.0
+        },
+        "type": "python.OutputParser",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.0.2-SNAPSHOT"
+        },
+        "properties": {
+          "Output Parser": "StrOutputParser"
+        },
+        "propertyDescriptors": {
+          "Output Parser": {
+            "name": "Output Parser",
+            "displayName": "Output Parser",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 25,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "failure"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      },
+      {
+        "identifier": "3f5a050d-2106-35eb-99da-7ea92e9fc31f",
+        "instanceIdentifier": "7a880e7d-5a49-359b-553c-395c740ea09e",
+        "name": "Model",
+        "comments": "",
+        "position": {
+          "x": 1520.0,
+          "y": 296.0
+        },
+        "type": "python.Model",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "python-extensions",
+          "version": "0.0.2-SNAPSHOT"
+        },
+        "properties": {
+          "langchain.model.api_key": "#{OPENAI_API_KEY}",
+          "Model": "ChatOpenAI",
+          "langchain.model.model": "#{LLM_MODEL}"
+        },
+        "propertyDescriptors": {
+          "langchain.model.api_key": {
+            "name": "langchain.model.api_key",
+            "displayName": "langchain.model.api_key",
+            "identifiesControllerService": false,
+            "sensitive": true,
+            "dynamic": true
+          },
+          "Model": {
+            "name": "Model",
+            "displayName": "Model",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "langchain.model.model": {
+            "name": "langchain.model.model",
+            "displayName": "langchain.model.model",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": true
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 25,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "original",
+          "failure"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      }
+    ],
+    "inputPorts": [],
+    "outputPorts": [],
+    "connections": [
+      {
+        "identifier": "2985b551-5889-3d14-bcca-1c1c55fd7555",
+        "instanceIdentifier": "460c5686-59f6-33ae-03b2-1bc9553e780f",
+        "name": "",
+        "source": {
+          "id": "0357acbe-405a-3f70-92b2-0bf4190f02c0",
+          "type": "PROCESSOR",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "OutputParser",
+          "comments": "",
+          "instanceIdentifier": "d3f6e062-d3f4-3b27-d8fe-c48bdd6d8dc7"
+        },
+        "destination": {
+          "id": "f91aead0-d217-3f31-a83a-64c9fb77ce6b",
+          "type": "FUNNEL",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "Funnel",
+          "comments": "",
+          "instanceIdentifier": "5e74a74a-7668-32d9-fa10-a8fba2c7c10e"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          "success"
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      },
+      {
+        "identifier": "57204a9e-a8f1-3708-860c-8cc253988719",
+        "instanceIdentifier": "f25c1ca1-8e05-37e6-d20b-c1dc77fd3db1",
+        "name": "",
+        "source": {
+          "id": "d5b26089-2cd6-3842-a24e-f5946173f864",
+          "type": "PROCESSOR",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "Trigger",
+          "comments": "",
+          "instanceIdentifier": "605bfc57-eac6-36e1-4654-e030f27fd6ae"
+        },
+        "destination": {
+          "id": "af6fdb12-db52-33ea-89f9-af8019a22aab",
+          "type": "PROCESSOR",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "PromptTemplate",
+          "comments": "",
+          "instanceIdentifier": "9031397b-37b3-3523-9ae8-745ef86f56a2"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          "success"
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      },
+      {
+        "identifier": "6673449b-40be-3271-aae6-901306f0f131",
+        "instanceIdentifier": "b998fa9f-8ede-36de-1688-82d1bdcee1ad",
+        "name": "",
+        "source": {
+          "id": "3f5a050d-2106-35eb-99da-7ea92e9fc31f",
+          "type": "PROCESSOR",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "Model",
+          "comments": "",
+          "instanceIdentifier": "7a880e7d-5a49-359b-553c-395c740ea09e"
+        },
+        "destination": {
+          "id": "0357acbe-405a-3f70-92b2-0bf4190f02c0",
+          "type": "PROCESSOR",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "OutputParser",
+          "comments": "",
+          "instanceIdentifier": "d3f6e062-d3f4-3b27-d8fe-c48bdd6d8dc7"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          "success"
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      },
+      {
+        "identifier": "48e1c8fc-61ed-3e6f-b592-27639940f0c1",
+        "instanceIdentifier": "81cb1fc8-a506-3734-a6bc-03ae580659ae",
+        "name": "",
+        "source": {
+          "id": "af6fdb12-db52-33ea-89f9-af8019a22aab",
+          "type": "PROCESSOR",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "PromptTemplate",
+          "comments": "",
+          "instanceIdentifier": "9031397b-37b3-3523-9ae8-745ef86f56a2"
+        },
+        "destination": {
+          "id": "3f5a050d-2106-35eb-99da-7ea92e9fc31f",
+          "type": "PROCESSOR",
+          "groupId": "0720f106-72d3-37ac-b92b-ab737cd36196",
+          "name": "Model",
+          "comments": "",
+          "instanceIdentifier": "7a880e7d-5a49-359b-553c-395c740ea09e"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          "success"
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      }
+    ],
+    "labels": [
+      {
+        "identifier": "0aca742c-1e61-3c0e-8488-7bfb7755f328",
+        "instanceIdentifier": "7230f5e5-717c-3411-eafb-4611fcf624a1",
+        "position": {
+          "x": 968.0,
+          "y": 248.0
+        },
+        "label": "                                                                            LangChain Expression Language (LCEL) in NiFi",
+        "zIndex": 0,
+        "width": 1416.0,
+        "height": 192.0,
+        "style": {
+          "font-size": "24px"
+        },
+        "componentType": "LABEL",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      }
+    ],
+    "funnels": [
+      {
+        "identifier": "f91aead0-d217-3f31-a83a-64c9fb77ce6b",
+        "instanceIdentifier": "5e74a74a-7668-32d9-fa10-a8fba2c7c10e",
+        "position": {
+          "x": 2168.0,
+          "y": 568.0
+        },
+        "componentType": "FUNNEL",
+        "groupIdentifier": "0720f106-72d3-37ac-b92b-ab737cd36196"
+      }
+    ],
+    "controllerServices": [],
+    "parameterContextName": "main",
+    "defaultFlowFileExpiration": "0 sec",
+    "defaultBackPressureObjectThreshold": 10000,
+    "defaultBackPressureDataSizeThreshold": "1 GB",
+    "scheduledState": "ENABLED",
+    "executionEngine": "INHERITED",
+    "maxConcurrentTasks": 1,
+    "statelessFlowTimeout": "1 min",
+    "logFileSuffix": "",
+    "flowFileConcurrency": "UNBOUNDED",
+    "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+    "componentType": "PROCESS_GROUP"
+  },
+  "externalControllerServices": {},
+  "parameterContexts": {
+    "main": {
+      "name": "main",
+      "parameters": [
+        {
+          "name": "OPENAI_API_KEY",
+          "description": "",
+          "sensitive": true,
+          "provided": false
+        },
+        {
+          "name": "LLM_MODEL",
+          "description": "",
+          "sensitive": false,
+          "provided": false,
+          "value": "gpt-4-0125-preview"
+        }
+      ],
+      "inheritedParameterContexts": [],
+      "componentType": "PARAMETER_CONTEXT"
+    }
+  },
+  "flowEncodingVersion": "1.0",
+  "parameterProviders": {},
+  "latest": false
+}

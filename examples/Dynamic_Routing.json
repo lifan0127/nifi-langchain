@@ -1,1 +1,1810 @@
-{"flowContents":{"identifier":"8d858e1b-1512-308a-b600-f29d57639653","instanceIdentifier":"018d1004-8a21-1724-64af-38c6257a92ca","name":"Dynamic Routing","comments":"","position":{"x":1040.0,"y":-104.0},"processGroups":[{"identifier":"d3d3611a-398f-3e8a-b392-38d9556a590a","instanceIdentifier":"776842d9-018d-1000-24fd-4fdd50ee7a08","name":"Route By Question Type","comments":"","position":{"x":456.0,"y":504.0},"processGroups":[],"remoteProcessGroups":[],"processors":[{"identifier":"3f8503a8-d4c9-3626-a2e2-8e1b37780e7c","instanceIdentifier":"8a21172b-100b-118d-dd23-3e6fc7c3e464","name":"Route by Question Type","comments":"","position":{"x":656.0,"y":432.0},"type":"org.apache.nifi.processors.standard.RouteOnAttribute","bundle":{"group":"org.apache.nifi","artifact":"nifi-standard-nar","version":"2.0.0-M2"},"properties":{"Chemistry":"${question_type:equals('Chemistry')}","Routing Strategy":"Route to Property name","Running":"${question_type:equals('Running')}"},"propertyDescriptors":{"Chemistry":{"name":"Chemistry","displayName":"Chemistry","identifiesControllerService":false,"sensitive":false,"dynamic":true},"Routing Strategy":{"name":"Routing Strategy","displayName":"Routing Strategy","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Running":{"name":"Running","displayName":"Running","identifiesControllerService":false,"sensitive":false,"dynamic":true}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["unmatched"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"a47b4942-fe32-3099-a57e-28d8265d6d42","instanceIdentifier":"c17f367a-ad26-1c61-4f7c-7034f234e7d4","name":"Model","comments":"","position":{"x":656.0,"y":832.0},"type":"python.Model","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Model":"ChatOpenAI","langchain.model.model":"gpt-4-turbo-preview"},"propertyDescriptors":{"langchain.model.api_key":{"name":"langchain.model.api_key","displayName":"langchain.model.api_key","identifiesControllerService":false,"sensitive":true,"dynamic":true},"Model":{"name":"Model","displayName":"Model","identifiesControllerService":false,"sensitive":false,"dynamic":false},"langchain.model.model":{"name":"langchain.model.model","displayName":"langchain.model.model","identifiesControllerService":false,"sensitive":false,"dynamic":true}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"d86bb4b4-ee11-3663-878f-bcc4c4ecf869","instanceIdentifier":"8a211732-100b-118d-e152-7254b8845d5e","name":"Chemistry Prompt Template","comments":"","position":{"x":912.0,"y":632.0},"type":"python.PromptTemplate","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Template":"You are a distinguished chemistry professor. Always answer questions starting with \"As a professor in chemistry\". \nRespond to the following question:\n\nQuestion: {input}\nAnswer:"},"propertyDescriptors":{"Template":{"name":"Template","displayName":"Template","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"704284dd-652c-3121-9174-5118334c66e1","instanceIdentifier":"8a211730-100b-118d-30c8-c970be6e4bfd","name":"Running Prompt Template","comments":"","position":{"x":392.0,"y":632.0},"type":"python.PromptTemplate","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Template":"You are an expert running coach. Always answer questions starting with \"As a running coach\". \nRespond to the following question:\n\nQuestion: {input}\nAnswer:"},"propertyDescriptors":{"Template":{"name":"Template","displayName":"Template","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"8ca7e369-ca3c-3b56-a3cc-cca53170e133","instanceIdentifier":"8a211728-100b-118d-df31-ed2d5a867327","name":"Extract Question Type","comments":"","position":{"x":656.0,"y":240.0},"type":"org.apache.nifi.processors.standard.EvaluateJsonPath","bundle":{"group":"org.apache.nifi","artifact":"nifi-standard-nar","version":"2.0.0-M2"},"properties":{"Destination":"flowfile-attribute","Max String Length":"20 MB","question_type":"$.type","Return Type":"auto-detect","Null Value Representation":"empty string","Path Not Found Behavior":"ignore"},"propertyDescriptors":{"Destination":{"name":"Destination","displayName":"Destination","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Max String Length":{"name":"Max String Length","displayName":"Max String Length","identifiesControllerService":false,"sensitive":false,"dynamic":false},"question_type":{"name":"question_type","displayName":"question_type","identifiesControllerService":false,"sensitive":false,"dynamic":true},"Return Type":{"name":"Return Type","displayName":"Return Type","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Null Value Representation":{"name":"Null Value Representation","displayName":"Null Value Representation","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Path Not Found Behavior":{"name":"Path Not Found Behavior","displayName":"Path Not Found Behavior","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":0,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["failure","unmatched"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"aa37894d-7f34-31e7-bf37-7a4fdab85954","instanceIdentifier":"7bbe3a0b-db3b-1b33-c90b-0ef20c1d28a5","name":"OutputParser","comments":"","position":{"x":656.0,"y":1032.0},"type":"python.OutputParser","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Output Parser":"StrOutputParser"},"propertyDescriptors":{"Output Parser":{"name":"Output Parser","displayName":"Output Parser","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"}],"inputPorts":[{"identifier":"f5548954-75f3-323c-ae90-243fa02758b5","instanceIdentifier":"776b61e8-018d-1000-e0c5-72942735aaa9","name":"Questions with Types","position":{"x":712.0,"y":128.0},"type":"INPUT_PORT","concurrentlySchedulableTaskCount":1,"scheduledState":"ENABLED","allowRemoteAccess":false,"portFunction":"STANDARD","componentType":"INPUT_PORT","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"}],"outputPorts":[{"identifier":"cf6fc614-7c9e-3399-b1eb-cd68374c9446","instanceIdentifier":"c17f3680-ad26-1c61-c2de-8c34350b68d6","name":"Answers","position":{"x":712.0,"y":1240.0},"type":"OUTPUT_PORT","concurrentlySchedulableTaskCount":1,"scheduledState":"ENABLED","allowRemoteAccess":false,"portFunction":"STANDARD","componentType":"OUTPUT_PORT","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"}],"connections":[{"identifier":"6cbce2d2-c530-3681-a3ba-e0ed2948d841","instanceIdentifier":"8a211733-100b-118d-8489-c4f7062a55df","name":"","source":{"id":"3f8503a8-d4c9-3626-a2e2-8e1b37780e7c","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Route by Question Type","comments":"","instanceIdentifier":"8a21172b-100b-118d-dd23-3e6fc7c3e464"},"destination":{"id":"704284dd-652c-3121-9174-5118334c66e1","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Running Prompt Template","comments":"","instanceIdentifier":"8a211730-100b-118d-30c8-c970be6e4bfd"},"labelIndex":1,"zIndex":0,"selectedRelationships":["Running"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"7f9da5bd-ae34-3706-82d5-9d4678d572e8","instanceIdentifier":"c17f367c-ad26-1c61-55c2-07e9b33519ac","name":"","source":{"id":"d86bb4b4-ee11-3663-878f-bcc4c4ecf869","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Chemistry Prompt Template","comments":"","instanceIdentifier":"8a211732-100b-118d-e152-7254b8845d5e"},"destination":{"id":"a47b4942-fe32-3099-a57e-28d8265d6d42","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Model","comments":"","instanceIdentifier":"c17f367a-ad26-1c61-4f7c-7034f234e7d4"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"58d22d52-91dc-3ff8-b7b2-6280287edbc0","instanceIdentifier":"8a211734-100b-118d-9a7d-3b43e135e673","name":"","source":{"id":"3f8503a8-d4c9-3626-a2e2-8e1b37780e7c","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Route by Question Type","comments":"","instanceIdentifier":"8a21172b-100b-118d-dd23-3e6fc7c3e464"},"destination":{"id":"d86bb4b4-ee11-3663-878f-bcc4c4ecf869","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Chemistry Prompt Template","comments":"","instanceIdentifier":"8a211732-100b-118d-e152-7254b8845d5e"},"labelIndex":1,"zIndex":0,"selectedRelationships":["Chemistry"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"b25b5ea7-2542-31a2-b455-540e21814094","instanceIdentifier":"c17f367b-ad26-1c61-1419-f47dc2706700","name":"","source":{"id":"704284dd-652c-3121-9174-5118334c66e1","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Running Prompt Template","comments":"","instanceIdentifier":"8a211730-100b-118d-30c8-c970be6e4bfd"},"destination":{"id":"a47b4942-fe32-3099-a57e-28d8265d6d42","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Model","comments":"","instanceIdentifier":"c17f367a-ad26-1c61-4f7c-7034f234e7d4"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"5dc6c421-4795-3ca6-9777-f98cdea31ab0","instanceIdentifier":"c17f367d-ad26-1c61-bd3c-1b617b308341","name":"","source":{"id":"a47b4942-fe32-3099-a57e-28d8265d6d42","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Model","comments":"","instanceIdentifier":"c17f367a-ad26-1c61-4f7c-7034f234e7d4"},"destination":{"id":"aa37894d-7f34-31e7-bf37-7a4fdab85954","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"OutputParser","comments":"","instanceIdentifier":"7bbe3a0b-db3b-1b33-c90b-0ef20c1d28a5"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"7c588dc6-bfb1-3169-994c-2611f1078531","instanceIdentifier":"8a21172c-100b-118d-ad01-230d122f8c73","name":"","source":{"id":"8ca7e369-ca3c-3b56-a3cc-cca53170e133","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Extract Question Type","comments":"","instanceIdentifier":"8a211728-100b-118d-df31-ed2d5a867327"},"destination":{"id":"3f8503a8-d4c9-3626-a2e2-8e1b37780e7c","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Route by Question Type","comments":"","instanceIdentifier":"8a21172b-100b-118d-dd23-3e6fc7c3e464"},"labelIndex":1,"zIndex":0,"selectedRelationships":["matched"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"401f361f-8d36-36a3-9d99-dd4172977d46","instanceIdentifier":"c17f3681-ad26-1c61-0bbe-dbf6d827231d","name":"","source":{"id":"aa37894d-7f34-31e7-bf37-7a4fdab85954","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"OutputParser","comments":"","instanceIdentifier":"7bbe3a0b-db3b-1b33-c90b-0ef20c1d28a5"},"destination":{"id":"cf6fc614-7c9e-3399-b1eb-cd68374c9446","type":"OUTPUT_PORT","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Answers","instanceIdentifier":"c17f3680-ad26-1c61-c2de-8c34350b68d6"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"},{"identifier":"5bf17ecd-ce20-34ea-80db-690e908676a8","instanceIdentifier":"8a211729-100b-118d-4d46-a152b1ac607d","name":"","source":{"id":"f5548954-75f3-323c-ae90-243fa02758b5","type":"INPUT_PORT","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Questions with Types","instanceIdentifier":"776b61e8-018d-1000-e0c5-72942735aaa9"},"destination":{"id":"8ca7e369-ca3c-3b56-a3cc-cca53170e133","type":"PROCESSOR","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Extract Question Type","comments":"","instanceIdentifier":"8a211728-100b-118d-df31-ed2d5a867327"},"labelIndex":1,"zIndex":0,"selectedRelationships":[""],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"}],"labels":[{"identifier":"fbbc8a9a-09c0-32a9-86a7-e4280a849e06","instanceIdentifier":"8a211724-1007-118d-7464-9ac68641a711","position":{"x":368.0,"y":376.0},"label":"Route by Question Type","zIndex":0,"width":920.0,"height":592.0,"style":{"font-size":"24px"},"componentType":"LABEL","groupIdentifier":"d3d3611a-398f-3e8a-b392-38d9556a590a"}],"funnels":[],"controllerServices":[],"defaultFlowFileExpiration":"0 sec","defaultBackPressureObjectThreshold":10000,"defaultBackPressureDataSizeThreshold":"1 GB","scheduledState":"ENABLED","executionEngine":"INHERITED","maxConcurrentTasks":1,"statelessFlowTimeout":"1 min","flowFileConcurrency":"UNBOUNDED","flowFileOutboundPolicy":"STREAM_WHEN_AVAILABLE","componentType":"PROCESS_GROUP","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"},{"identifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","instanceIdentifier":"018d1013-8a21-1724-b0e4-39ae3501bc8b","name":"Identify Incoming Questions","comments":"","position":{"x":456.0,"y":240.0},"processGroups":[],"remoteProcessGroups":[],"processors":[{"identifier":"b8e2a348-98b7-3f18-ab50-9826e2774d52","instanceIdentifier":"018d1021-8a21-1724-081d-322078eede59","name":"Model","comments":"","position":{"x":1064.0,"y":536.0},"type":"python.Model","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Model":"ChatOpenAI","langchain.model.model":"gpt-4-turbo-preview"},"propertyDescriptors":{"langchain.model.api_key":{"name":"langchain.model.api_key","displayName":"langchain.model.api_key","identifiesControllerService":false,"sensitive":true,"dynamic":true},"Model":{"name":"Model","displayName":"Model","identifiesControllerService":false,"sensitive":false,"dynamic":false},"langchain.model.model":{"name":"langchain.model.model","displayName":"langchain.model.model","identifiesControllerService":false,"sensitive":false,"dynamic":true}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"5e5d57fc-9bce-329a-937d-bd14f354e67c","instanceIdentifier":"018d101a-8a21-1724-3cd1-a641a7db675c","name":"PromptTemplate","comments":"","position":{"x":1064.0,"y":328.0},"type":"python.PromptTemplate","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Template":"Given the user question below, classify it as either being about Running, Chemistry, or Other\n\nDo not respond with more than one word. Do not use quotation marks.\n\nQuestion: {input}\n\nClassification:"},"propertyDescriptors":{"Template":{"name":"Template","displayName":"Template","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"6b217d68-869b-3835-af96-15dcbbf28738","instanceIdentifier":"018d100a-8a21-1724-f70d-e0f957909d7e","name":"RunnableParallelMerge","comments":"","position":{"x":456.0,"y":736.0},"type":"com.apex974.nifi.processors.langchainhelper.RunnableParallelMerge","bundle":{"group":"com.apex974.nifi","artifact":"nifi-langchain-helper-nar","version":"0.0.1"},"properties":{"Maximum Group Size":null,"Attribute Strategy":"Keep Only Common Attributes","Max Bin Age":null,"Maximum Number of Entries":"1000","Minimum Group Size":"0 B","Maximum number of Bins":"5","Minimum Number of Entries":"1"},"propertyDescriptors":{"Maximum Group Size":{"name":"Maximum Group Size","displayName":"Maximum Group Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Attribute Strategy":{"name":"Attribute Strategy","displayName":"Attribute Strategy","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Max Bin Age":{"name":"Max Bin Age","displayName":"Max Bin Age","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Maximum Number of Entries":{"name":"Maximum Number of Entries","displayName":"Maximum Number of Entries","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Minimum Group Size":{"name":"Minimum Group Size","displayName":"Minimum Group Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Maximum number of Bins":{"name":"Maximum number of Bins","displayName":"Maximum number of Bins","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Minimum Number of Entries":{"name":"Minimum Number of Entries","displayName":"Minimum Number of Entries","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":0,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"ca7860ec-8485-3abc-80fa-7e55544d8156","instanceIdentifier":"018d1022-8a21-1724-a566-e137b1d0380e","name":"OutputParser","comments":"","position":{"x":1064.0,"y":736.0},"type":"python.OutputParser","bundle":{"group":"org.apache.nifi","artifact":"python-extensions","version":"0.0.2-SNAPSHOT"},"properties":{"Output Parser":"StrOutputParser"},"propertyDescriptors":{"Output Parser":{"name":"Output Parser","displayName":"Output Parser","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":25,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":["original","failure"],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"4c2c8d81-503f-32c1-85ad-88c404c82cb1","instanceIdentifier":"018d100c-8a21-1724-cd8f-c6b6a237f75f","name":"RunnableParallel","comments":"","position":{"x":456.0,"y":328.0},"type":"com.apex974.nifi.processors.langchainhelper.RunnableParallel","bundle":{"group":"com.apex974.nifi","artifact":"nifi-langchain-helper-nar","version":"0.0.1"},"properties":{"langchain.runnable_parallel.input":"The input is the question.","langchain.runnable_parallel.type":"The type of the incoming question."},"propertyDescriptors":{"langchain.runnable_parallel.input":{"name":"langchain.runnable_parallel.input","displayName":"langchain.runnable_parallel.input","identifiesControllerService":false,"sensitive":false,"dynamic":true},"langchain.runnable_parallel.type":{"name":"langchain.runnable_parallel.type","displayName":"langchain.runnable_parallel.type","identifiesControllerService":false,"sensitive":false,"dynamic":true}},"style":{},"schedulingPeriod":"0 sec","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":0,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":[],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"}],"inputPorts":[{"identifier":"2bb19b90-4de2-36d6-a461-f4ab038a9a7f","instanceIdentifier":"018d1018-8a21-1724-6c7c-a1653c7e3cb8","name":"Incoming Questions","position":{"x":512.0,"y":184.0},"type":"INPUT_PORT","concurrentlySchedulableTaskCount":1,"scheduledState":"ENABLED","allowRemoteAccess":false,"portFunction":"STANDARD","componentType":"INPUT_PORT","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"}],"outputPorts":[{"identifier":"55851da4-a86c-3fcb-9306-8b85c006f1c6","instanceIdentifier":"018d1026-8a21-1724-ab5b-d72df5895b5e","name":"Questions with Types","comments":"","position":{"x":512.0,"y":968.0},"type":"OUTPUT_PORT","concurrentlySchedulableTaskCount":1,"scheduledState":"ENABLED","allowRemoteAccess":false,"portFunction":"STANDARD","componentType":"OUTPUT_PORT","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"}],"connections":[{"identifier":"dc76a11a-40f9-3675-98db-d36095d6eea5","instanceIdentifier":"018d102a-8a21-1724-72dc-727c145da3dc","name":"","source":{"id":"6b217d68-869b-3835-af96-15dcbbf28738","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"RunnableParallelMerge","comments":"","instanceIdentifier":"018d100a-8a21-1724-f70d-e0f957909d7e"},"destination":{"id":"55851da4-a86c-3fcb-9306-8b85c006f1c6","type":"OUTPUT_PORT","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"Questions with Types","comments":"","instanceIdentifier":"018d1026-8a21-1724-ab5b-d72df5895b5e"},"labelIndex":1,"zIndex":0,"selectedRelationships":["merged"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"96516ed6-da93-3aa4-ab89-c1746afef9c2","instanceIdentifier":"9918666d-018d-1000-4d1b-3e7c5c180fec","name":"","source":{"id":"4c2c8d81-503f-32c1-85ad-88c404c82cb1","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"RunnableParallel","comments":"","instanceIdentifier":"018d100c-8a21-1724-cd8f-c6b6a237f75f"},"destination":{"id":"6b217d68-869b-3835-af96-15dcbbf28738","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"RunnableParallelMerge","comments":"","instanceIdentifier":"018d100a-8a21-1724-f70d-e0f957909d7e"},"labelIndex":1,"zIndex":0,"selectedRelationships":["input"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"421209f5-ea31-3003-95ac-097227a1e678","instanceIdentifier":"018d1024-8a21-1724-2ff6-1c930fa7b998","name":"","source":{"id":"b8e2a348-98b7-3f18-ab50-9826e2774d52","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"Model","comments":"","instanceIdentifier":"018d1021-8a21-1724-081d-322078eede59"},"destination":{"id":"ca7860ec-8485-3abc-80fa-7e55544d8156","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"OutputParser","comments":"","instanceIdentifier":"018d1022-8a21-1724-a566-e137b1d0380e"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"19657896-1701-3361-aca4-159d4f8898bf","instanceIdentifier":"018d1019-8a21-1724-b94f-e760172aea14","name":"","source":{"id":"2bb19b90-4de2-36d6-a461-f4ab038a9a7f","type":"INPUT_PORT","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"Incoming Questions","instanceIdentifier":"018d1018-8a21-1724-6c7c-a1653c7e3cb8"},"destination":{"id":"4c2c8d81-503f-32c1-85ad-88c404c82cb1","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"RunnableParallel","comments":"","instanceIdentifier":"018d100c-8a21-1724-cd8f-c6b6a237f75f"},"labelIndex":1,"zIndex":0,"selectedRelationships":[""],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"e5157ead-afb5-3c17-a3b2-d7a6d2a7e003","instanceIdentifier":"018d101c-8a21-1724-e47d-fb6f52a72a12","name":"","source":{"id":"4c2c8d81-503f-32c1-85ad-88c404c82cb1","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"RunnableParallel","comments":"","instanceIdentifier":"018d100c-8a21-1724-cd8f-c6b6a237f75f"},"destination":{"id":"5e5d57fc-9bce-329a-937d-bd14f354e67c","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"PromptTemplate","comments":"","instanceIdentifier":"018d101a-8a21-1724-3cd1-a641a7db675c"},"labelIndex":1,"zIndex":0,"selectedRelationships":["type"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"f51d0b61-7880-3b3f-a252-15f5c454a343","instanceIdentifier":"018d1023-8a21-1724-6848-138df47462e4","name":"","source":{"id":"5e5d57fc-9bce-329a-937d-bd14f354e67c","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"PromptTemplate","comments":"","instanceIdentifier":"018d101a-8a21-1724-3cd1-a641a7db675c"},"destination":{"id":"b8e2a348-98b7-3f18-ab50-9826e2774d52","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"Model","comments":"","instanceIdentifier":"018d1021-8a21-1724-081d-322078eede59"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"7191050d-712e-3f33-87b8-d5c91b2df268","instanceIdentifier":"018d1025-8a21-1724-f8f2-3e411946afb8","name":"","source":{"id":"ca7860ec-8485-3abc-80fa-7e55544d8156","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"OutputParser","comments":"","instanceIdentifier":"018d1022-8a21-1724-a566-e137b1d0380e"},"destination":{"id":"6b217d68-869b-3835-af96-15dcbbf28738","type":"PROCESSOR","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"RunnableParallelMerge","comments":"","instanceIdentifier":"018d100a-8a21-1724-f70d-e0f957909d7e"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"}],"labels":[{"identifier":"df440caf-406c-36ff-a26e-5ea6a6cfd7d9","instanceIdentifier":"018d1017-8a21-1724-0008-598decb6c56b","position":{"x":648.0,"y":672.0},"label":"Question","zIndex":4,"width":88.0,"height":32.0,"style":{"background-color":"#daddf0","font-size":"18px"},"componentType":"LABEL","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"1b442a12-ae7d-3916-9072-cae40b0e016c","instanceIdentifier":"018d1007-8a21-1724-7351-e9ffecfc91dd","position":{"x":424.0,"y":296.0},"label":"                                                               LCEL Runnable Parallel","zIndex":0,"width":1024.0,"height":592.0,"style":{"font-size":"24px"},"componentType":"LABEL","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"},{"identifier":"64f15d93-d4f8-353c-a6d2-08a89b909398","instanceIdentifier":"018d1016-8a21-1724-5bca-be1d642327de","position":{"x":872.0,"y":736.0},"label":"Question Type","zIndex":2,"width":128.0,"height":32.0,"style":{"background-color":"#daddf0","font-size":"18px"},"componentType":"LABEL","groupIdentifier":"d04dafa9-b362-39b7-98f5-dd179fbd86a9"}],"funnels":[],"controllerServices":[],"defaultFlowFileExpiration":"0 sec","defaultBackPressureObjectThreshold":10000,"defaultBackPressureDataSizeThreshold":"1 GB","scheduledState":"ENABLED","executionEngine":"INHERITED","maxConcurrentTasks":1,"statelessFlowTimeout":"1 min","flowFileConcurrency":"UNBOUNDED","flowFileOutboundPolicy":"STREAM_WHEN_AVAILABLE","componentType":"PROCESS_GROUP","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"}],"remoteProcessGroups":[],"processors":[{"identifier":"de3e4903-1193-3ff5-9045-424257b0da9f","instanceIdentifier":"018d100b-8a21-1724-b083-9e59559834cc","name":"Running Question","comments":"","position":{"x":216.0,"y":32.0},"type":"org.apache.nifi.processors.standard.GenerateFlowFile","bundle":{"group":"com.apex974.nifi","artifact":"nifi-langchain-helper-nar","version":"0.0.1"},"properties":{"character-set":"UTF-8","File Size":"0B","mime-type":"text/plain","generate-ff-custom-text":"What is a tempo run?","Batch Size":"1","Unique FlowFiles":"false","Data Format":"Text"},"propertyDescriptors":{"character-set":{"name":"character-set","displayName":"Character Set","identifiesControllerService":false,"sensitive":false,"dynamic":false},"File Size":{"name":"File Size","displayName":"File Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"mime-type":{"name":"mime-type","displayName":"Mime Type","identifiesControllerService":false,"sensitive":false,"dynamic":false},"generate-ff-custom-text":{"name":"generate-ff-custom-text","displayName":"Custom Text","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Batch Size":{"name":"Batch Size","displayName":"Batch Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Unique FlowFiles":{"name":"Unique FlowFiles","displayName":"Unique FlowFiles","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Data Format":{"name":"Data Format","displayName":"Data Format","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"99999 min","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":0,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":[],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"},{"identifier":"a5789813-7935-3fe9-9b83-20321b32d1a9","instanceIdentifier":"018d101e-8a21-1724-c7ca-5c0a84ee7178","name":"Chemistry Question","comments":"","position":{"x":720.0,"y":32.0},"type":"org.apache.nifi.processors.standard.GenerateFlowFile","bundle":{"group":"com.apex974.nifi","artifact":"nifi-langchain-helper-nar","version":"0.0.1"},"properties":{"character-set":"UTF-8","File Size":"0B","mime-type":"text/plain","generate-ff-custom-text":"What plastics are biodegradable?","Batch Size":"1","Unique FlowFiles":"false","Data Format":"Text"},"propertyDescriptors":{"character-set":{"name":"character-set","displayName":"Character Set","identifiesControllerService":false,"sensitive":false,"dynamic":false},"File Size":{"name":"File Size","displayName":"File Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"mime-type":{"name":"mime-type","displayName":"Mime Type","identifiesControllerService":false,"sensitive":false,"dynamic":false},"generate-ff-custom-text":{"name":"generate-ff-custom-text","displayName":"Custom Text","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Batch Size":{"name":"Batch Size","displayName":"Batch Size","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Unique FlowFiles":{"name":"Unique FlowFiles","displayName":"Unique FlowFiles","identifiesControllerService":false,"sensitive":false,"dynamic":false},"Data Format":{"name":"Data Format","displayName":"Data Format","identifiesControllerService":false,"sensitive":false,"dynamic":false}},"style":{},"schedulingPeriod":"99999 min","schedulingStrategy":"TIMER_DRIVEN","executionNode":"ALL","penaltyDuration":"30 sec","yieldDuration":"1 sec","bulletinLevel":"WARN","runDurationMillis":0,"concurrentlySchedulableTaskCount":1,"autoTerminatedRelationships":[],"scheduledState":"ENABLED","retryCount":10,"retriedRelationships":[],"backoffMechanism":"PENALIZE_FLOWFILE","maxBackoffPeriod":"10 mins","componentType":"PROCESSOR","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"}],"inputPorts":[],"outputPorts":[],"connections":[{"identifier":"fcf2811a-3b8d-377e-a251-569bee175ea6","instanceIdentifier":"018d1020-8a21-1724-acba-b5ea8cadcf59","name":"","source":{"id":"a5789813-7935-3fe9-9b83-20321b32d1a9","type":"PROCESSOR","groupId":"8d858e1b-1512-308a-b600-f29d57639653","name":"Chemistry Question","comments":"","instanceIdentifier":"018d101e-8a21-1724-c7ca-5c0a84ee7178"},"destination":{"id":"2bb19b90-4de2-36d6-a461-f4ab038a9a7f","type":"INPUT_PORT","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"Incoming Questions","instanceIdentifier":"018d1018-8a21-1724-6c7c-a1653c7e3cb8"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"},{"identifier":"b1e3ae7b-7add-32fb-a0d7-b67e1f5d1726","instanceIdentifier":"018d101f-8a21-1724-a046-1bda1ddbcc00","name":"","source":{"id":"de3e4903-1193-3ff5-9045-424257b0da9f","type":"PROCESSOR","groupId":"8d858e1b-1512-308a-b600-f29d57639653","name":"Running Question","comments":"","instanceIdentifier":"018d100b-8a21-1724-b083-9e59559834cc"},"destination":{"id":"2bb19b90-4de2-36d6-a461-f4ab038a9a7f","type":"INPUT_PORT","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"Incoming Questions","instanceIdentifier":"018d1018-8a21-1724-6c7c-a1653c7e3cb8"},"labelIndex":1,"zIndex":0,"selectedRelationships":["success"],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"},{"identifier":"2ba6822f-e997-3ecf-8c00-a0cb7b49e191","instanceIdentifier":"8a21172a-100b-118d-a069-a0ae84ca2ad2","name":"","source":{"id":"55851da4-a86c-3fcb-9306-8b85c006f1c6","type":"OUTPUT_PORT","groupId":"d04dafa9-b362-39b7-98f5-dd179fbd86a9","name":"Questions with Types","comments":"","instanceIdentifier":"018d1026-8a21-1724-ab5b-d72df5895b5e"},"destination":{"id":"f5548954-75f3-323c-ae90-243fa02758b5","type":"INPUT_PORT","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Questions with Types","instanceIdentifier":"776b61e8-018d-1000-e0c5-72942735aaa9"},"labelIndex":1,"zIndex":0,"selectedRelationships":[""],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"},{"identifier":"ca271e11-9e95-3c36-9a63-9cc566f67e2c","instanceIdentifier":"c17f3684-ad26-1c61-8601-e7949c138106","name":"","source":{"id":"cf6fc614-7c9e-3399-b1eb-cd68374c9446","type":"OUTPUT_PORT","groupId":"d3d3611a-398f-3e8a-b392-38d9556a590a","name":"Answers","instanceIdentifier":"c17f3680-ad26-1c61-c2de-8c34350b68d6"},"destination":{"id":"5918b15e-a6ad-3c72-a12a-e4aa21ac2e26","type":"FUNNEL","groupId":"8d858e1b-1512-308a-b600-f29d57639653","name":"Funnel","comments":"","instanceIdentifier":"c17f3683-ad26-1c61-c01b-3ed95e4ea2ee"},"labelIndex":1,"zIndex":0,"selectedRelationships":[""],"backPressureObjectThreshold":10000,"backPressureDataSizeThreshold":"1 GB","flowFileExpiration":"0 sec","prioritizers":[],"bends":[],"loadBalanceStrategy":"DO_NOT_LOAD_BALANCE","partitioningAttribute":"","loadBalanceCompression":"DO_NOT_COMPRESS","componentType":"CONNECTION","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"}],"labels":[],"funnels":[{"identifier":"5918b15e-a6ad-3c72-a12a-e4aa21ac2e26","instanceIdentifier":"c17f3683-ad26-1c61-c01b-3ed95e4ea2ee","position":{"x":624.0,"y":760.0},"componentType":"FUNNEL","groupIdentifier":"8d858e1b-1512-308a-b600-f29d57639653"}],"controllerServices":[],"defaultFlowFileExpiration":"0 sec","defaultBackPressureObjectThreshold":10000,"defaultBackPressureDataSizeThreshold":"1 GB","scheduledState":"ENABLED","executionEngine":"INHERITED","maxConcurrentTasks":1,"statelessFlowTimeout":"1 min","flowFileConcurrency":"UNBOUNDED","flowFileOutboundPolicy":"STREAM_WHEN_AVAILABLE","componentType":"PROCESS_GROUP"},"externalControllerServices":{},"parameterContexts":{},"flowEncodingVersion":"1.0","parameterProviders":{},"latest":false}
+{
+  "flowContents": {
+    "identifier": "0508f67a-6603-3f54-aae1-56194359bdc8",
+    "instanceIdentifier": "9e4ddffe-018d-1000-8988-067439648f67",
+    "name": "Dynamic_Routing",
+    "comments": "",
+    "position": {
+      "x": 1192.0,
+      "y": 224.0
+    },
+    "processGroups": [
+      {
+        "identifier": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+        "instanceIdentifier": "af71f449-4678-3362-b834-a1d36e84f1ff",
+        "name": "Route By Question Type",
+        "comments": "",
+        "position": {
+          "x": 456.0,
+          "y": 504.0
+        },
+        "processGroups": [],
+        "remoteProcessGroups": [],
+        "processors": [
+          {
+            "identifier": "3f8503a8-d4c9-3626-a2e2-8e1b37780e7c",
+            "instanceIdentifier": "b7b2d485-9fa9-3b98-986e-32be7714e38d",
+            "name": "Route by Question Type",
+            "comments": "",
+            "position": {
+              "x": 656.0,
+              "y": 432.0
+            },
+            "type": "org.apache.nifi.processors.standard.RouteOnAttribute",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "nifi-standard-nar",
+              "version": "2.0.0-M2"
+            },
+            "properties": {
+              "Chemistry": "${question_type:equals('Chemistry')}",
+              "Routing Strategy": "Route to Property name",
+              "Running": "${question_type:equals('Running')}"
+            },
+            "propertyDescriptors": {
+              "Chemistry": {
+                "name": "Chemistry",
+                "displayName": "Chemistry",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": true
+              },
+              "Routing Strategy": {
+                "name": "Routing Strategy",
+                "displayName": "Routing Strategy",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Running": {
+                "name": "Running",
+                "displayName": "Running",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": true
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "unmatched"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "a47b4942-fe32-3099-a57e-28d8265d6d42",
+            "instanceIdentifier": "6dc40bdd-f611-3634-ebc4-fd0b9564b653",
+            "name": "Model",
+            "comments": "",
+            "position": {
+              "x": 656.0,
+              "y": 832.0
+            },
+            "type": "python.Model",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "python-extensions",
+              "version": "0.0.2-SNAPSHOT"
+            },
+            "properties": {
+              "langchain.model.api_key": "#{OPENAI_API_KEY}",
+              "Model": "ChatOpenAI",
+              "langchain.model.model": "#{LLM_MODEL}"
+            },
+            "propertyDescriptors": {
+              "langchain.model.api_key": {
+                "name": "langchain.model.api_key",
+                "displayName": "langchain.model.api_key",
+                "identifiesControllerService": false,
+                "sensitive": true,
+                "dynamic": true
+              },
+              "Model": {
+                "name": "Model",
+                "displayName": "Model",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "langchain.model.model": {
+                "name": "langchain.model.model",
+                "displayName": "langchain.model.model",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": true
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "d86bb4b4-ee11-3663-878f-bcc4c4ecf869",
+            "instanceIdentifier": "2abe7e98-fbaa-3737-7ad2-8fc90614beb9",
+            "name": "Chemistry Prompt Template",
+            "comments": "",
+            "position": {
+              "x": 912.0,
+              "y": 632.0
+            },
+            "type": "python.PromptTemplate",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "python-extensions",
+              "version": "0.0.2-SNAPSHOT"
+            },
+            "properties": {
+              "Template": "You are a distinguished chemistry professor. Always answer questions starting with \"As a professor in chemistry\". \nRespond to the following question:\n\nQuestion: {input}\nAnswer:"
+            },
+            "propertyDescriptors": {
+              "Template": {
+                "name": "Template",
+                "displayName": "Template",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "704284dd-652c-3121-9174-5118334c66e1",
+            "instanceIdentifier": "825a4cd9-8e0e-3f9a-14c8-54b4c7994307",
+            "name": "Running Prompt Template",
+            "comments": "",
+            "position": {
+              "x": 392.0,
+              "y": 632.0
+            },
+            "type": "python.PromptTemplate",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "python-extensions",
+              "version": "0.0.2-SNAPSHOT"
+            },
+            "properties": {
+              "Template": "You are an expert running coach. Always answer questions starting with \"As a running coach\". \nRespond to the following question:\n\nQuestion: {input}\nAnswer:"
+            },
+            "propertyDescriptors": {
+              "Template": {
+                "name": "Template",
+                "displayName": "Template",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "8ca7e369-ca3c-3b56-a3cc-cca53170e133",
+            "instanceIdentifier": "44527435-c83f-3d29-736e-516722552015",
+            "name": "Extract Question Type",
+            "comments": "",
+            "position": {
+              "x": 656.0,
+              "y": 240.0
+            },
+            "type": "org.apache.nifi.processors.standard.EvaluateJsonPath",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "nifi-standard-nar",
+              "version": "2.0.0-M2"
+            },
+            "properties": {
+              "Destination": "flowfile-attribute",
+              "Max String Length": "20 MB",
+              "question_type": "$.type",
+              "Return Type": "auto-detect",
+              "Null Value Representation": "empty string",
+              "Path Not Found Behavior": "ignore"
+            },
+            "propertyDescriptors": {
+              "Destination": {
+                "name": "Destination",
+                "displayName": "Destination",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Max String Length": {
+                "name": "Max String Length",
+                "displayName": "Max String Length",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "question_type": {
+                "name": "question_type",
+                "displayName": "question_type",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": true
+              },
+              "Return Type": {
+                "name": "Return Type",
+                "displayName": "Return Type",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Null Value Representation": {
+                "name": "Null Value Representation",
+                "displayName": "Null Value Representation",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Path Not Found Behavior": {
+                "name": "Path Not Found Behavior",
+                "displayName": "Path Not Found Behavior",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 0,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "failure",
+              "unmatched"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "aa37894d-7f34-31e7-bf37-7a4fdab85954",
+            "instanceIdentifier": "8026a8d7-d5ca-3adb-25c3-8f5523bee6d2",
+            "name": "OutputParser",
+            "comments": "",
+            "position": {
+              "x": 656.0,
+              "y": 1032.0
+            },
+            "type": "python.OutputParser",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "python-extensions",
+              "version": "0.0.2-SNAPSHOT"
+            },
+            "properties": {
+              "Output Parser": "StrOutputParser"
+            },
+            "propertyDescriptors": {
+              "Output Parser": {
+                "name": "Output Parser",
+                "displayName": "Output Parser",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          }
+        ],
+        "inputPorts": [
+          {
+            "identifier": "f5548954-75f3-323c-ae90-243fa02758b5",
+            "instanceIdentifier": "b7afc812-7ea4-3eb1-f47f-ff8549ca044d",
+            "name": "Questions with Types",
+            "position": {
+              "x": 712.0,
+              "y": 128.0
+            },
+            "type": "INPUT_PORT",
+            "concurrentlySchedulableTaskCount": 1,
+            "scheduledState": "ENABLED",
+            "allowRemoteAccess": false,
+            "portFunction": "STANDARD",
+            "componentType": "INPUT_PORT",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          }
+        ],
+        "outputPorts": [
+          {
+            "identifier": "cf6fc614-7c9e-3399-b1eb-cd68374c9446",
+            "instanceIdentifier": "9615e885-2b53-39d4-a7df-59f898832eb1",
+            "name": "Answers",
+            "position": {
+              "x": 712.0,
+              "y": 1240.0
+            },
+            "type": "OUTPUT_PORT",
+            "concurrentlySchedulableTaskCount": 1,
+            "scheduledState": "ENABLED",
+            "allowRemoteAccess": false,
+            "portFunction": "STANDARD",
+            "componentType": "OUTPUT_PORT",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          }
+        ],
+        "connections": [
+          {
+            "identifier": "6cbce2d2-c530-3681-a3ba-e0ed2948d841",
+            "instanceIdentifier": "0cc1ef9b-ce67-3d67-ba5b-c08c967ec778",
+            "name": "",
+            "source": {
+              "id": "3f8503a8-d4c9-3626-a2e2-8e1b37780e7c",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Route by Question Type",
+              "comments": "",
+              "instanceIdentifier": "b7b2d485-9fa9-3b98-986e-32be7714e38d"
+            },
+            "destination": {
+              "id": "704284dd-652c-3121-9174-5118334c66e1",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Running Prompt Template",
+              "comments": "",
+              "instanceIdentifier": "825a4cd9-8e0e-3f9a-14c8-54b4c7994307"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "Running"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "7f9da5bd-ae34-3706-82d5-9d4678d572e8",
+            "instanceIdentifier": "4648a3a3-9677-34b0-eb8d-6f5656653fe1",
+            "name": "",
+            "source": {
+              "id": "d86bb4b4-ee11-3663-878f-bcc4c4ecf869",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Chemistry Prompt Template",
+              "comments": "",
+              "instanceIdentifier": "2abe7e98-fbaa-3737-7ad2-8fc90614beb9"
+            },
+            "destination": {
+              "id": "a47b4942-fe32-3099-a57e-28d8265d6d42",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Model",
+              "comments": "",
+              "instanceIdentifier": "6dc40bdd-f611-3634-ebc4-fd0b9564b653"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "success"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "58d22d52-91dc-3ff8-b7b2-6280287edbc0",
+            "instanceIdentifier": "1d03c029-372e-3327-e8c1-6ffc98d364b6",
+            "name": "",
+            "source": {
+              "id": "3f8503a8-d4c9-3626-a2e2-8e1b37780e7c",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Route by Question Type",
+              "comments": "",
+              "instanceIdentifier": "b7b2d485-9fa9-3b98-986e-32be7714e38d"
+            },
+            "destination": {
+              "id": "d86bb4b4-ee11-3663-878f-bcc4c4ecf869",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Chemistry Prompt Template",
+              "comments": "",
+              "instanceIdentifier": "2abe7e98-fbaa-3737-7ad2-8fc90614beb9"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "Chemistry"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "b25b5ea7-2542-31a2-b455-540e21814094",
+            "instanceIdentifier": "9695778d-61af-3273-8be6-0275152eafd0",
+            "name": "",
+            "source": {
+              "id": "704284dd-652c-3121-9174-5118334c66e1",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Running Prompt Template",
+              "comments": "",
+              "instanceIdentifier": "825a4cd9-8e0e-3f9a-14c8-54b4c7994307"
+            },
+            "destination": {
+              "id": "a47b4942-fe32-3099-a57e-28d8265d6d42",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Model",
+              "comments": "",
+              "instanceIdentifier": "6dc40bdd-f611-3634-ebc4-fd0b9564b653"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "success"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "7c588dc6-bfb1-3169-994c-2611f1078531",
+            "instanceIdentifier": "9c44bb91-58bd-32f1-4aad-940055d059cb",
+            "name": "",
+            "source": {
+              "id": "8ca7e369-ca3c-3b56-a3cc-cca53170e133",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Extract Question Type",
+              "comments": "",
+              "instanceIdentifier": "44527435-c83f-3d29-736e-516722552015"
+            },
+            "destination": {
+              "id": "3f8503a8-d4c9-3626-a2e2-8e1b37780e7c",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Route by Question Type",
+              "comments": "",
+              "instanceIdentifier": "b7b2d485-9fa9-3b98-986e-32be7714e38d"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "matched"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "5dc6c421-4795-3ca6-9777-f98cdea31ab0",
+            "instanceIdentifier": "52dcb82a-86ae-34d1-5e49-caa7c33bfd37",
+            "name": "",
+            "source": {
+              "id": "a47b4942-fe32-3099-a57e-28d8265d6d42",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Model",
+              "comments": "",
+              "instanceIdentifier": "6dc40bdd-f611-3634-ebc4-fd0b9564b653"
+            },
+            "destination": {
+              "id": "aa37894d-7f34-31e7-bf37-7a4fdab85954",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "OutputParser",
+              "comments": "",
+              "instanceIdentifier": "8026a8d7-d5ca-3adb-25c3-8f5523bee6d2"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "success"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "401f361f-8d36-36a3-9d99-dd4172977d46",
+            "instanceIdentifier": "fd74f946-3c11-3e4b-54a0-0c28fc992c33",
+            "name": "",
+            "source": {
+              "id": "aa37894d-7f34-31e7-bf37-7a4fdab85954",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "OutputParser",
+              "comments": "",
+              "instanceIdentifier": "8026a8d7-d5ca-3adb-25c3-8f5523bee6d2"
+            },
+            "destination": {
+              "id": "cf6fc614-7c9e-3399-b1eb-cd68374c9446",
+              "type": "OUTPUT_PORT",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Answers",
+              "instanceIdentifier": "9615e885-2b53-39d4-a7df-59f898832eb1"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "success"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          },
+          {
+            "identifier": "5bf17ecd-ce20-34ea-80db-690e908676a8",
+            "instanceIdentifier": "5f1db157-6bf8-3f16-524f-42f81868beb5",
+            "name": "",
+            "source": {
+              "id": "f5548954-75f3-323c-ae90-243fa02758b5",
+              "type": "INPUT_PORT",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Questions with Types",
+              "instanceIdentifier": "b7afc812-7ea4-3eb1-f47f-ff8549ca044d"
+            },
+            "destination": {
+              "id": "8ca7e369-ca3c-3b56-a3cc-cca53170e133",
+              "type": "PROCESSOR",
+              "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+              "name": "Extract Question Type",
+              "comments": "",
+              "instanceIdentifier": "44527435-c83f-3d29-736e-516722552015"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              ""
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          }
+        ],
+        "labels": [
+          {
+            "identifier": "fbbc8a9a-09c0-32a9-86a7-e4280a849e06",
+            "instanceIdentifier": "4dbd17df-89a7-3869-9f0d-7ac1dd264e3c",
+            "position": {
+              "x": 368.0,
+              "y": 376.0
+            },
+            "label": "Route by Question Type",
+            "zIndex": 0,
+            "width": 920.0,
+            "height": 592.0,
+            "style": {
+              "font-size": "24px"
+            },
+            "componentType": "LABEL",
+            "groupIdentifier": "d3d3611a-398f-3e8a-b392-38d9556a590a"
+          }
+        ],
+        "funnels": [],
+        "controllerServices": [],
+        "parameterContextName": "main",
+        "defaultFlowFileExpiration": "0 sec",
+        "defaultBackPressureObjectThreshold": 10000,
+        "defaultBackPressureDataSizeThreshold": "1 GB",
+        "scheduledState": "ENABLED",
+        "executionEngine": "INHERITED",
+        "maxConcurrentTasks": 1,
+        "statelessFlowTimeout": "1 min",
+        "flowFileConcurrency": "UNBOUNDED",
+        "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+        "componentType": "PROCESS_GROUP",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      },
+      {
+        "identifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+        "instanceIdentifier": "b0c6308f-8b4b-3bbd-99c6-fa218a3dffab",
+        "name": "Identify Incoming Questions",
+        "comments": "",
+        "position": {
+          "x": 456.0,
+          "y": 240.0
+        },
+        "processGroups": [],
+        "remoteProcessGroups": [],
+        "processors": [
+          {
+            "identifier": "b8e2a348-98b7-3f18-ab50-9826e2774d52",
+            "instanceIdentifier": "b00f1e60-b268-3147-309d-6bf602fefc1e",
+            "name": "Model",
+            "comments": "",
+            "position": {
+              "x": 1064.0,
+              "y": 536.0
+            },
+            "type": "python.Model",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "python-extensions",
+              "version": "0.0.2-SNAPSHOT"
+            },
+            "properties": {
+              "langchain.model.api_key": "#{OPENAI_API_KEY}",
+              "Model": "ChatOpenAI",
+              "langchain.model.model": "#{LLM_MODEL}"
+            },
+            "propertyDescriptors": {
+              "langchain.model.api_key": {
+                "name": "langchain.model.api_key",
+                "displayName": "langchain.model.api_key",
+                "identifiesControllerService": false,
+                "sensitive": true,
+                "dynamic": true
+              },
+              "Model": {
+                "name": "Model",
+                "displayName": "Model",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "langchain.model.model": {
+                "name": "langchain.model.model",
+                "displayName": "langchain.model.model",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": true
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "5e5d57fc-9bce-329a-937d-bd14f354e67c",
+            "instanceIdentifier": "9f1c0c41-067c-39b4-ebc4-fdc188f741aa",
+            "name": "PromptTemplate",
+            "comments": "",
+            "position": {
+              "x": 1064.0,
+              "y": 328.0
+            },
+            "type": "python.PromptTemplate",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "python-extensions",
+              "version": "0.0.2-SNAPSHOT"
+            },
+            "properties": {
+              "Template": "Given the user question below, classify it as either being about Running, Chemistry, or Other\n\nDo not respond with more than one word. Do not use quotation marks.\n\nQuestion: {input}\n\nClassification:"
+            },
+            "propertyDescriptors": {
+              "Template": {
+                "name": "Template",
+                "displayName": "Template",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "6b217d68-869b-3835-af96-15dcbbf28738",
+            "instanceIdentifier": "4f2fa7a1-9252-301e-99d2-478ef93d4649",
+            "name": "RunnableParallelMerge",
+            "comments": "",
+            "position": {
+              "x": 456.0,
+              "y": 736.0
+            },
+            "type": "com.apex974.nifi.processors.langchainhelper.RunnableParallelMerge",
+            "bundle": {
+              "group": "com.apex974.nifi",
+              "artifact": "nifi-langchain-helper-nar",
+              "version": "0.0.1"
+            },
+            "properties": {
+              "Maximum Group Size": null,
+              "Attribute Strategy": "Keep Only Common Attributes",
+              "Max Bin Age": null,
+              "Maximum Number of Entries": "1000",
+              "Minimum Group Size": "0 B",
+              "Maximum number of Bins": "5",
+              "Minimum Number of Entries": "1"
+            },
+            "propertyDescriptors": {
+              "Maximum Group Size": {
+                "name": "Maximum Group Size",
+                "displayName": "Maximum Group Size",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Attribute Strategy": {
+                "name": "Attribute Strategy",
+                "displayName": "Attribute Strategy",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Max Bin Age": {
+                "name": "Max Bin Age",
+                "displayName": "Max Bin Age",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Maximum Number of Entries": {
+                "name": "Maximum Number of Entries",
+                "displayName": "Maximum Number of Entries",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Minimum Group Size": {
+                "name": "Minimum Group Size",
+                "displayName": "Minimum Group Size",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Maximum number of Bins": {
+                "name": "Maximum number of Bins",
+                "displayName": "Maximum number of Bins",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              },
+              "Minimum Number of Entries": {
+                "name": "Minimum Number of Entries",
+                "displayName": "Minimum Number of Entries",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 0,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "4c2c8d81-503f-32c1-85ad-88c404c82cb1",
+            "instanceIdentifier": "f2cb6a87-9500-3f71-75c9-db24f534aee4",
+            "name": "RunnableParallel",
+            "comments": "",
+            "position": {
+              "x": 456.0,
+              "y": 328.0
+            },
+            "type": "com.apex974.nifi.processors.langchainhelper.RunnableParallel",
+            "bundle": {
+              "group": "com.apex974.nifi",
+              "artifact": "nifi-langchain-helper-nar",
+              "version": "0.0.1"
+            },
+            "properties": {
+              "langchain.runnable_parallel.input": "input",
+              "langchain.runnable_parallel.type": "type"
+            },
+            "propertyDescriptors": {
+              "langchain.runnable_parallel.input": {
+                "name": "langchain.runnable_parallel.input",
+                "displayName": "langchain.runnable_parallel.input",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": true
+              },
+              "langchain.runnable_parallel.type": {
+                "name": "langchain.runnable_parallel.type",
+                "displayName": "langchain.runnable_parallel.type",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": true
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 0,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "ca7860ec-8485-3abc-80fa-7e55544d8156",
+            "instanceIdentifier": "525eb21f-9c03-3cac-4ef0-fe43d8bb963c",
+            "name": "OutputParser",
+            "comments": "",
+            "position": {
+              "x": 1064.0,
+              "y": 736.0
+            },
+            "type": "python.OutputParser",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "python-extensions",
+              "version": "0.0.2-SNAPSHOT"
+            },
+            "properties": {
+              "Output Parser": "StrOutputParser"
+            },
+            "propertyDescriptors": {
+              "Output Parser": {
+                "name": "Output Parser",
+                "displayName": "Output Parser",
+                "identifiesControllerService": false,
+                "sensitive": false,
+                "dynamic": false
+              }
+            },
+            "style": {},
+            "schedulingPeriod": "0 sec",
+            "schedulingStrategy": "TIMER_DRIVEN",
+            "executionNode": "ALL",
+            "penaltyDuration": "30 sec",
+            "yieldDuration": "1 sec",
+            "bulletinLevel": "WARN",
+            "runDurationMillis": 25,
+            "concurrentlySchedulableTaskCount": 1,
+            "autoTerminatedRelationships": [
+              "original",
+              "failure"
+            ],
+            "scheduledState": "ENABLED",
+            "retryCount": 10,
+            "retriedRelationships": [],
+            "backoffMechanism": "PENALIZE_FLOWFILE",
+            "maxBackoffPeriod": "10 mins",
+            "componentType": "PROCESSOR",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          }
+        ],
+        "inputPorts": [
+          {
+            "identifier": "2bb19b90-4de2-36d6-a461-f4ab038a9a7f",
+            "instanceIdentifier": "e0170950-2b86-3049-376a-ab68d80de9ef",
+            "name": "Incoming Questions",
+            "position": {
+              "x": 512.0,
+              "y": 184.0
+            },
+            "type": "INPUT_PORT",
+            "concurrentlySchedulableTaskCount": 1,
+            "scheduledState": "ENABLED",
+            "allowRemoteAccess": false,
+            "portFunction": "STANDARD",
+            "componentType": "INPUT_PORT",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          }
+        ],
+        "outputPorts": [
+          {
+            "identifier": "55851da4-a86c-3fcb-9306-8b85c006f1c6",
+            "instanceIdentifier": "35b8f119-b92d-3a9e-8e97-6406d02b4c2b",
+            "name": "Questions with Types",
+            "comments": "",
+            "position": {
+              "x": 512.0,
+              "y": 968.0
+            },
+            "type": "OUTPUT_PORT",
+            "concurrentlySchedulableTaskCount": 1,
+            "scheduledState": "ENABLED",
+            "allowRemoteAccess": false,
+            "portFunction": "STANDARD",
+            "componentType": "OUTPUT_PORT",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          }
+        ],
+        "connections": [
+          {
+            "identifier": "dc76a11a-40f9-3675-98db-d36095d6eea5",
+            "instanceIdentifier": "44a11817-b9b2-31ec-a6fd-8a27b83b9a00",
+            "name": "",
+            "source": {
+              "id": "6b217d68-869b-3835-af96-15dcbbf28738",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "RunnableParallelMerge",
+              "comments": "",
+              "instanceIdentifier": "4f2fa7a1-9252-301e-99d2-478ef93d4649"
+            },
+            "destination": {
+              "id": "55851da4-a86c-3fcb-9306-8b85c006f1c6",
+              "type": "OUTPUT_PORT",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "Questions with Types",
+              "comments": "",
+              "instanceIdentifier": "35b8f119-b92d-3a9e-8e97-6406d02b4c2b"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "merged"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "96516ed6-da93-3aa4-ab89-c1746afef9c2",
+            "instanceIdentifier": "d66e7eb6-f874-3fec-9682-ec8179d3a499",
+            "name": "",
+            "source": {
+              "id": "4c2c8d81-503f-32c1-85ad-88c404c82cb1",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "RunnableParallel",
+              "comments": "",
+              "instanceIdentifier": "f2cb6a87-9500-3f71-75c9-db24f534aee4"
+            },
+            "destination": {
+              "id": "6b217d68-869b-3835-af96-15dcbbf28738",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "RunnableParallelMerge",
+              "comments": "",
+              "instanceIdentifier": "4f2fa7a1-9252-301e-99d2-478ef93d4649"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "input"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "421209f5-ea31-3003-95ac-097227a1e678",
+            "instanceIdentifier": "6b8195af-c816-3043-7796-e8ed43a5a3fe",
+            "name": "",
+            "source": {
+              "id": "b8e2a348-98b7-3f18-ab50-9826e2774d52",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "Model",
+              "comments": "",
+              "instanceIdentifier": "b00f1e60-b268-3147-309d-6bf602fefc1e"
+            },
+            "destination": {
+              "id": "ca7860ec-8485-3abc-80fa-7e55544d8156",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "OutputParser",
+              "comments": "",
+              "instanceIdentifier": "525eb21f-9c03-3cac-4ef0-fe43d8bb963c"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "success"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "19657896-1701-3361-aca4-159d4f8898bf",
+            "instanceIdentifier": "9a21258e-aee1-356a-2199-d364740ef9a3",
+            "name": "",
+            "source": {
+              "id": "2bb19b90-4de2-36d6-a461-f4ab038a9a7f",
+              "type": "INPUT_PORT",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "Incoming Questions",
+              "instanceIdentifier": "e0170950-2b86-3049-376a-ab68d80de9ef"
+            },
+            "destination": {
+              "id": "4c2c8d81-503f-32c1-85ad-88c404c82cb1",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "RunnableParallel",
+              "comments": "",
+              "instanceIdentifier": "f2cb6a87-9500-3f71-75c9-db24f534aee4"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              ""
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "e5157ead-afb5-3c17-a3b2-d7a6d2a7e003",
+            "instanceIdentifier": "d4f4813e-11b1-38af-2734-deb59fe63fa5",
+            "name": "",
+            "source": {
+              "id": "4c2c8d81-503f-32c1-85ad-88c404c82cb1",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "RunnableParallel",
+              "comments": "",
+              "instanceIdentifier": "f2cb6a87-9500-3f71-75c9-db24f534aee4"
+            },
+            "destination": {
+              "id": "5e5d57fc-9bce-329a-937d-bd14f354e67c",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "PromptTemplate",
+              "comments": "",
+              "instanceIdentifier": "9f1c0c41-067c-39b4-ebc4-fdc188f741aa"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "type"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "f51d0b61-7880-3b3f-a252-15f5c454a343",
+            "instanceIdentifier": "aed8fc9e-791a-3d47-3cc7-4be96a618990",
+            "name": "",
+            "source": {
+              "id": "5e5d57fc-9bce-329a-937d-bd14f354e67c",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "PromptTemplate",
+              "comments": "",
+              "instanceIdentifier": "9f1c0c41-067c-39b4-ebc4-fdc188f741aa"
+            },
+            "destination": {
+              "id": "b8e2a348-98b7-3f18-ab50-9826e2774d52",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "Model",
+              "comments": "",
+              "instanceIdentifier": "b00f1e60-b268-3147-309d-6bf602fefc1e"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "success"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "7191050d-712e-3f33-87b8-d5c91b2df268",
+            "instanceIdentifier": "9d8a6adf-1762-30a6-7dad-b2cef305d551",
+            "name": "",
+            "source": {
+              "id": "ca7860ec-8485-3abc-80fa-7e55544d8156",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "OutputParser",
+              "comments": "",
+              "instanceIdentifier": "525eb21f-9c03-3cac-4ef0-fe43d8bb963c"
+            },
+            "destination": {
+              "id": "6b217d68-869b-3835-af96-15dcbbf28738",
+              "type": "PROCESSOR",
+              "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+              "name": "RunnableParallelMerge",
+              "comments": "",
+              "instanceIdentifier": "4f2fa7a1-9252-301e-99d2-478ef93d4649"
+            },
+            "labelIndex": 1,
+            "zIndex": 0,
+            "selectedRelationships": [
+              "success"
+            ],
+            "backPressureObjectThreshold": 10000,
+            "backPressureDataSizeThreshold": "1 GB",
+            "flowFileExpiration": "0 sec",
+            "prioritizers": [],
+            "bends": [],
+            "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+            "partitioningAttribute": "",
+            "loadBalanceCompression": "DO_NOT_COMPRESS",
+            "componentType": "CONNECTION",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          }
+        ],
+        "labels": [
+          {
+            "identifier": "df440caf-406c-36ff-a26e-5ea6a6cfd7d9",
+            "instanceIdentifier": "31ad6f34-79e6-32cf-94c5-b3175c077b45",
+            "position": {
+              "x": 648.0,
+              "y": 672.0
+            },
+            "label": "Question",
+            "zIndex": 4,
+            "width": 88.0,
+            "height": 32.0,
+            "style": {
+              "background-color": "#daddf0",
+              "font-size": "18px"
+            },
+            "componentType": "LABEL",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "1b442a12-ae7d-3916-9072-cae40b0e016c",
+            "instanceIdentifier": "102ba568-e494-38bc-be9b-cf81381a647e",
+            "position": {
+              "x": 424.0,
+              "y": 296.0
+            },
+            "label": "                                                               LCEL Runnable Parallel",
+            "zIndex": 0,
+            "width": 1024.0,
+            "height": 592.0,
+            "style": {
+              "font-size": "24px"
+            },
+            "componentType": "LABEL",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          },
+          {
+            "identifier": "64f15d93-d4f8-353c-a6d2-08a89b909398",
+            "instanceIdentifier": "9b8eec68-4857-3b3f-0637-103115b7a526",
+            "position": {
+              "x": 872.0,
+              "y": 736.0
+            },
+            "label": "Question Type",
+            "zIndex": 2,
+            "width": 128.0,
+            "height": 32.0,
+            "style": {
+              "background-color": "#daddf0",
+              "font-size": "18px"
+            },
+            "componentType": "LABEL",
+            "groupIdentifier": "d04dafa9-b362-39b7-98f5-dd179fbd86a9"
+          }
+        ],
+        "funnels": [],
+        "controllerServices": [],
+        "parameterContextName": "main",
+        "defaultFlowFileExpiration": "0 sec",
+        "defaultBackPressureObjectThreshold": 10000,
+        "defaultBackPressureDataSizeThreshold": "1 GB",
+        "scheduledState": "ENABLED",
+        "executionEngine": "INHERITED",
+        "maxConcurrentTasks": 1,
+        "statelessFlowTimeout": "1 min",
+        "flowFileConcurrency": "UNBOUNDED",
+        "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+        "componentType": "PROCESS_GROUP",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      }
+    ],
+    "remoteProcessGroups": [],
+    "processors": [
+      {
+        "identifier": "de3e4903-1193-3ff5-9045-424257b0da9f",
+        "instanceIdentifier": "c4dab9f7-c873-3e97-7db4-2653341a76ef",
+        "name": "Running Question",
+        "comments": "",
+        "position": {
+          "x": 216.0,
+          "y": 32.0
+        },
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.0.0-M2"
+        },
+        "properties": {
+          "character-set": "UTF-8",
+          "File Size": "0B",
+          "mime-type": "text/plain",
+          "generate-ff-custom-text": "What is a tempo run?",
+          "Batch Size": "1",
+          "Unique FlowFiles": "false",
+          "Data Format": "Text"
+        },
+        "propertyDescriptors": {
+          "character-set": {
+            "name": "character-set",
+            "displayName": "Character Set",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "File Size": {
+            "name": "File Size",
+            "displayName": "File Size",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "mime-type": {
+            "name": "mime-type",
+            "displayName": "Mime Type",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "generate-ff-custom-text": {
+            "name": "generate-ff-custom-text",
+            "displayName": "Custom Text",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Batch Size": {
+            "name": "Batch Size",
+            "displayName": "Batch Size",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Unique FlowFiles": {
+            "name": "Unique FlowFiles",
+            "displayName": "Unique FlowFiles",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Data Format": {
+            "name": "Data Format",
+            "displayName": "Data Format",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "99999 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      },
+      {
+        "identifier": "a5789813-7935-3fe9-9b83-20321b32d1a9",
+        "instanceIdentifier": "ee080538-b590-32ee-e9d8-0f4b0e07396d",
+        "name": "Chemistry Question",
+        "comments": "",
+        "position": {
+          "x": 720.0,
+          "y": 32.0
+        },
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "2.0.0-M2"
+        },
+        "properties": {
+          "character-set": "UTF-8",
+          "File Size": "0B",
+          "mime-type": "text/plain",
+          "generate-ff-custom-text": "What plastics are biodegradable?",
+          "Batch Size": "1",
+          "Unique FlowFiles": "false",
+          "Data Format": "Text"
+        },
+        "propertyDescriptors": {
+          "character-set": {
+            "name": "character-set",
+            "displayName": "Character Set",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "File Size": {
+            "name": "File Size",
+            "displayName": "File Size",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "mime-type": {
+            "name": "mime-type",
+            "displayName": "Mime Type",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "generate-ff-custom-text": {
+            "name": "generate-ff-custom-text",
+            "displayName": "Custom Text",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Batch Size": {
+            "name": "Batch Size",
+            "displayName": "Batch Size",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Unique FlowFiles": {
+            "name": "Unique FlowFiles",
+            "displayName": "Unique FlowFiles",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          },
+          "Data Format": {
+            "name": "Data Format",
+            "displayName": "Data Format",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "dynamic": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "99999 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      }
+    ],
+    "inputPorts": [],
+    "outputPorts": [],
+    "connections": [
+      {
+        "identifier": "fcf2811a-3b8d-377e-a251-569bee175ea6",
+        "instanceIdentifier": "4dfc9ff8-1f98-3af4-d6ba-38eba7571eb4",
+        "name": "",
+        "source": {
+          "id": "a5789813-7935-3fe9-9b83-20321b32d1a9",
+          "type": "PROCESSOR",
+          "groupId": "0508f67a-6603-3f54-aae1-56194359bdc8",
+          "name": "Chemistry Question",
+          "comments": "",
+          "instanceIdentifier": "ee080538-b590-32ee-e9d8-0f4b0e07396d"
+        },
+        "destination": {
+          "id": "2bb19b90-4de2-36d6-a461-f4ab038a9a7f",
+          "type": "INPUT_PORT",
+          "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+          "name": "Incoming Questions",
+          "instanceIdentifier": "e0170950-2b86-3049-376a-ab68d80de9ef"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          "success"
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      },
+      {
+        "identifier": "2ba6822f-e997-3ecf-8c00-a0cb7b49e191",
+        "instanceIdentifier": "86009e33-cf10-3337-d9d3-ba7c08a82c9e",
+        "name": "",
+        "source": {
+          "id": "55851da4-a86c-3fcb-9306-8b85c006f1c6",
+          "type": "OUTPUT_PORT",
+          "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+          "name": "Questions with Types",
+          "comments": "",
+          "instanceIdentifier": "35b8f119-b92d-3a9e-8e97-6406d02b4c2b"
+        },
+        "destination": {
+          "id": "f5548954-75f3-323c-ae90-243fa02758b5",
+          "type": "INPUT_PORT",
+          "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+          "name": "Questions with Types",
+          "instanceIdentifier": "b7afc812-7ea4-3eb1-f47f-ff8549ca044d"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          ""
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      },
+      {
+        "identifier": "b1e3ae7b-7add-32fb-a0d7-b67e1f5d1726",
+        "instanceIdentifier": "82ba99e2-4681-3464-ebb0-4c129d827eb4",
+        "name": "",
+        "source": {
+          "id": "de3e4903-1193-3ff5-9045-424257b0da9f",
+          "type": "PROCESSOR",
+          "groupId": "0508f67a-6603-3f54-aae1-56194359bdc8",
+          "name": "Running Question",
+          "comments": "",
+          "instanceIdentifier": "c4dab9f7-c873-3e97-7db4-2653341a76ef"
+        },
+        "destination": {
+          "id": "2bb19b90-4de2-36d6-a461-f4ab038a9a7f",
+          "type": "INPUT_PORT",
+          "groupId": "d04dafa9-b362-39b7-98f5-dd179fbd86a9",
+          "name": "Incoming Questions",
+          "instanceIdentifier": "e0170950-2b86-3049-376a-ab68d80de9ef"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          "success"
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      },
+      {
+        "identifier": "ca271e11-9e95-3c36-9a63-9cc566f67e2c",
+        "instanceIdentifier": "367c6fc6-7553-3f5a-ec2f-cd5d86c8b847",
+        "name": "",
+        "source": {
+          "id": "cf6fc614-7c9e-3399-b1eb-cd68374c9446",
+          "type": "OUTPUT_PORT",
+          "groupId": "d3d3611a-398f-3e8a-b392-38d9556a590a",
+          "name": "Answers",
+          "instanceIdentifier": "9615e885-2b53-39d4-a7df-59f898832eb1"
+        },
+        "destination": {
+          "id": "5918b15e-a6ad-3c72-a12a-e4aa21ac2e26",
+          "type": "FUNNEL",
+          "groupId": "0508f67a-6603-3f54-aae1-56194359bdc8",
+          "name": "Funnel",
+          "comments": "",
+          "instanceIdentifier": "655ea97a-fea8-318b-fcbe-573d9c00770d"
+        },
+        "labelIndex": 1,
+        "zIndex": 0,
+        "selectedRelationships": [
+          ""
+        ],
+        "backPressureObjectThreshold": 10000,
+        "backPressureDataSizeThreshold": "1 GB",
+        "flowFileExpiration": "0 sec",
+        "prioritizers": [],
+        "bends": [],
+        "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+        "partitioningAttribute": "",
+        "loadBalanceCompression": "DO_NOT_COMPRESS",
+        "componentType": "CONNECTION",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      }
+    ],
+    "labels": [],
+    "funnels": [
+      {
+        "identifier": "5918b15e-a6ad-3c72-a12a-e4aa21ac2e26",
+        "instanceIdentifier": "655ea97a-fea8-318b-fcbe-573d9c00770d",
+        "position": {
+          "x": 624.0,
+          "y": 760.0
+        },
+        "componentType": "FUNNEL",
+        "groupIdentifier": "0508f67a-6603-3f54-aae1-56194359bdc8"
+      }
+    ],
+    "controllerServices": [],
+    "parameterContextName": "main",
+    "defaultFlowFileExpiration": "0 sec",
+    "defaultBackPressureObjectThreshold": 10000,
+    "defaultBackPressureDataSizeThreshold": "1 GB",
+    "scheduledState": "ENABLED",
+    "executionEngine": "INHERITED",
+    "maxConcurrentTasks": 1,
+    "statelessFlowTimeout": "1 min",
+    "flowFileConcurrency": "UNBOUNDED",
+    "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+    "componentType": "PROCESS_GROUP"
+  },
+  "externalControllerServices": {},
+  "parameterContexts": {
+    "main": {
+      "name": "main",
+      "parameters": [
+        {
+          "name": "OPENAI_API_KEY",
+          "description": "",
+          "sensitive": true,
+          "provided": false
+        },
+        {
+          "name": "LLM_MODEL",
+          "description": "",
+          "sensitive": false,
+          "provided": false,
+          "value": "gpt-4-0125-preview"
+        }
+      ],
+      "inheritedParameterContexts": [],
+      "componentType": "PARAMETER_CONTEXT"
+    }
+  },
+  "flowEncodingVersion": "1.0",
+  "parameterProviders": {},
+  "latest": false
+}
