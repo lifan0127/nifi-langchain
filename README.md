@@ -54,7 +54,7 @@ For installation in your NiFi environment (version 2.0 or higher required), down
 
 ## Configuration
 
-Each processor may have one or a few required parameters. For example, the `Model` processor necessitates selecting an LLM model. Additionally, you can directly pass parameters into the underlying LangChain LCEL components of the following processors by declare NiFi properties with prefixes. Please check out the [example flow definitions](./examples).
+Each processor may have one or a few required parameters. For example, the `Model` processor necessitates selecting an LLM model. Additionally, you can directly pass parameters into the underlying LangChain LCEL components of the following processors by declare NiFi properties with prefixes. 
 
 | Processor | Prefix | Examples |
 | --- | --- | --- |
@@ -62,6 +62,8 @@ Each processor may have one or a few required parameters. For example, the `Mode
 | Retriever | langchain.retriever. | langchain.retriever. |
 
 The `RunnableParallel` and `RunnableParallelMerge` processors should be used in pairs, with `RunnableParallel` defining paralle paths. Each custom property prefixed with `nifi.runnable_parallel.` define a new output relationship to route your flowfile. For example, custom property `nifi.runnable_parallel.context` defines a new `context` relationship.
+
+Please check out the [example flow definitions](./examples).
 
 ## Contribution
 
