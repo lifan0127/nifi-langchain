@@ -12,14 +12,15 @@ langchain = "^0.1.4"
 langchain-openai = "^0.0.5"
 langchain-core = "^0.1.17"
 langchain-community = "^0.0.16"
-psycopg2 = "^2.9.9"
+psycopg2-binary = "^2.9.9"
+pgvector = "^0.2.4"
+faiss-cpu = "^1.7.4"
+requests = "^2.31.0"
 
 [tool.poetry.group.dev]
 
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "^1.0.1"
-pgvector = "^0.2.4"
-psycopg2-binary = "^2.9.9"
 
 [build-system]
 requires = ["poetry-core"]
