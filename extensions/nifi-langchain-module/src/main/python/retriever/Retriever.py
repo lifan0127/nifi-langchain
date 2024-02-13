@@ -18,12 +18,12 @@ class Retriever(FlowFileTransform):
         version = '0.0.2-SNAPSHOT'
         description = "Retriever for RAG"
         tags = ["LangChain", "LCEL", "retriever", "RAG", "LLMs"]
-        dependencies = ['langchain==0.1.4', 'langchain-core==0.1.16', 'langchain_openai==0.0.5', 'langchain-community==0.0.17', 'pgvector']
+        dependencies = ['langchain==0.1.4', 'langchain-core==0.1.16', 'langchain_openai==0.0.5', 'langchain-community==0.0.17', 'pgvector==0.2.5', 'psycopg2-binary==2.9.9', 'faiss-cpu==1.7.4']
 
     RETRIEVER = PropertyDescriptor(
         name="Retriever",
         description="The document retriever to use",
-        allowable_values=["PGVector"],
+        allowable_values=["PGVector", "FAISS"],
         validators=[StandardValidators.NON_EMPTY_VALIDATOR],
         required=True
     )
