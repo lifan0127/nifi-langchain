@@ -23,7 +23,9 @@ Routing (Runnable Branch) can be achieved through existing NiFi processors and a
 To quickly get started with the NiFi LangChain processors, use the Docker image available on GitHub Container Registry. This image comes preinstalled with all the processors and includes example NiFi flows for demonstration.
 
 ```bash
-docker run --rm <image details>
+docker run --name nifi-langchain \
+  -p 8443:8443 \
+  ghcr.io/lifan0127/nifi-langchain:latest
 ```
 
 ### Hello LangChain
