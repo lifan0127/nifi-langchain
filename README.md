@@ -28,17 +28,25 @@ docker run --name nifi-langchain \
   ghcr.io/lifan0127/nifi-langchain:latest
 ```
 
+NiFi web UI: https://localhost:8443 (username: admin, password: nifi+langchain)
+
 ### Hello LangChain
 
 Demonstrates a minimal LCEL pipeline with prompt template, model, and output parser.
+
+![Hello LangChain](assets/hello-langchain.png)
 
 ### Retrieval Augmented Generation (RAG)
 
 Uses `Runnable Parallel` to combine question and context for a RAG system.
 
+![RAG](assets/rag.png)
+
 ### Dynamic Routing
 
 First classifies a question and then use NiFi native `RouteOnAttribute` processor to select a prompt for response synthesis. It demonstrates the composibility of LCEL pipelines.
+
+![Dynamic Routing](assets/routing.png)
 
 ## Installation
 
